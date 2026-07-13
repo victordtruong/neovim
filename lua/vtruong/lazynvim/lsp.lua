@@ -57,48 +57,44 @@ return {
 
         require("fidget").setup({})
         require("mason").setup()
+
+        -- Global default config applied to every LSP server via vim.lsp.config
+        -- (Neovim 0.11+). Per-server configs below merge over these defaults.
+        vim.lsp.config("*", {
+            capabilities = capabilities,
+        })
+
+        vim.lsp.config("lua_ls", {
+            settings = {
+                Lua = {
+                    runtime = { version = "Lua 5.1" },
+                    diagnostics = {
+                        globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
+                    },
+                },
+            },
+        })
+
+        vim.lsp.config("zls", {
+            root_markers = { ".git", "build.zig", "zls.json" },
+            settings = {
+                zls = {
+                    enable_inlay_hints = true,
+                    enable_snippets = true,
+                    warn_style = true,
+                },
+            },
+        })
+        vim.g.zig_fmt_parse_errors = 0
+        vim.g.zig_fmt_autosave = 0
+
+        -- mason-lspconfig v2 auto-enables installed servers via vim.lsp.enable,
+        -- honoring the vim.lsp.config values above. No `handlers` block needed.
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
             },
-            handlers = {
-                function(server_name) -- default handler (optional)
-                    require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
-                    }
-                end,
-
-                zls = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.zls.setup({
-                        root_dir = lspconfig.util.root_pattern(".git", "build.zig", "zls.json"),
-                        settings = {
-                            zls = {
-                                enable_inlay_hints = true,
-                                enable_snippets = true,
-                                warn_style = true,
-                            },
-                        },
-                    })
-                    vim.g.zig_fmt_parse_errors = 0
-                    vim.g.zig_fmt_autosave = 0
-
-                end,
-                ["lua_ls"] = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.lua_ls.setup {
-                        capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                runtime = { version = "Lua 5.1" },
-                                diagnostics = {
-                                    globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
-                                }
-                            }
-                        }
-                    }
-                end,
-            }
+            automatic_enable = true,
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }

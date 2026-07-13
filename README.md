@@ -39,7 +39,7 @@ Re-running `./install.sh` later updates an existing install in place.
 
 **Required**
 
-- **Neovim 0.10+**
+- **Neovim 0.11+** (uses `vim.lsp.config` for LSP setup)
 - **git**
 
 **Recommended** (features degrade gracefully without them)
