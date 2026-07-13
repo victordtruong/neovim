@@ -17,8 +17,36 @@ return {
     config = function()
         require("conform").setup({
             formatters_by_ft = {
-            }
+                lua = { "stylua" },
+            },
+            format_on_save = {
+                lsp_fallback = true,
+                timeout_ms = 1000,
+            },
         })
+        vim.keymap.set({ "n", "v" }, "<leader>f", function()
+            require("conform").format({ async = true, lsp_fallback = true })
+        end, { desc = "Format buffer" })
+
+        vim.api.nvim_create_autocmd("LspAttach", {
+            group = vim.api.nvim_create_augroup("vtruong-lsp-attach", { clear = true }),
+            callback = function(event)
+                local map = function(keys, fn, desc)
+                    vim.keymap.set("n", keys, fn, { buffer = event.buf, desc = "LSP: " .. desc })
+                end
+                map("gd", vim.lsp.buf.definition, "Go to definition")
+                map("gD", vim.lsp.buf.declaration, "Go to declaration")
+                map("gi", vim.lsp.buf.implementation, "Go to implementation")
+                map("gr", vim.lsp.buf.references, "References")
+                map("K",  vim.lsp.buf.hover, "Hover")
+                map("<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+                map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+                map("<leader>D", vim.lsp.buf.type_definition, "Type definition")
+                vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help,
+                    { buffer = event.buf, desc = "LSP: Signature help" })
+            end,
+        })
+
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
         local capabilities = vim.tbl_deep_extend(
