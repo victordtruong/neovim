@@ -48,19 +48,20 @@ Re-running `./install.sh` later updates an existing install in place.
 - **fd** — faster Telescope file finding
 - A **C compiler** (`gcc`/`clang`) + **make** — building treesitter parsers
 - **Node.js** + **npm** — many Mason-managed language servers
+- **JDK 17+** (`java`) — `kotlin_language_server` and other JVM servers
 - **unzip**, **curl** — Mason downloads
 
 Quick installs:
 
 ```sh
 # macOS (Homebrew)
-brew install neovim ripgrep fd node
+brew install neovim ripgrep fd node openjdk@17
 
 # Debian / Ubuntu
-sudo apt install neovim ripgrep fd-find build-essential nodejs npm
+sudo apt install neovim ripgrep fd-find build-essential nodejs npm openjdk-17-jdk
 
 # Arch
-sudo pacman -S neovim ripgrep fd base-devel nodejs npm
+sudo pacman -S neovim ripgrep fd base-devel nodejs npm jdk17-openjdk
 ```
 
 ## Config directory by OS
