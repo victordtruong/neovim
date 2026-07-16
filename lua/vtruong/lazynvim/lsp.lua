@@ -88,11 +88,20 @@ return {
         vim.g.zig_fmt_parse_errors = 0
         vim.g.zig_fmt_autosave = 0
 
+        vim.lsp.config("kotlin_language_server", {
+            root_markers = {
+                "settings.gradle", "settings.gradle.kts",
+                "build.gradle", "build.gradle.kts",
+                "pom.xml", ".git",
+            },
+        })
+
         -- mason-lspconfig v2 auto-enables installed servers via vim.lsp.enable,
         -- honoring the vim.lsp.config values above. No `handlers` block needed.
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
+                "kotlin_language_server",
             },
             automatic_enable = true,
         })

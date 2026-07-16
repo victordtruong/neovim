@@ -54,8 +54,9 @@ done
 #   fd       -> faster Telescope find_files
 #   cc/make  -> building nvim-treesitter parsers
 #   node/npm -> many Mason-managed language servers
+#   java     -> JDK 17+ for kotlin_language_server (and other JVM servers)
 #   unzip/curl -> Mason downloads
-declare -a recommended=(rg fd make node npm unzip curl)
+declare -a recommended=(rg fd make node npm java unzip curl)
 declare -a missing_recommended=()
 for tool in "${recommended[@]}"; do
   if have "$tool"; then
@@ -76,7 +77,7 @@ fi
 
 if [ "${#missing_required[@]}" -gt 0 ]; then
   err "Missing required tools: ${missing_required[*]}"
-  err "Install them and re-run. Neovim 0.10+ is recommended."
+  err "Install them and re-run. Neovim 0.11+ is required."
   exit 1
 fi
 
