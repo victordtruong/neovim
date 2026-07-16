@@ -35,6 +35,26 @@ cd ~/nvim-config
 
 Re-running `./install.sh` later updates an existing install in place.
 
+### Windows one-liner
+
+On Windows 10 1809+ / Windows 11, this PowerShell one-liner installs Neovim
+and the whole recommended toolchain via `winget`, clones the config into
+`%LOCALAPPDATA%\nvim`, refreshes `PATH`, and launches Neovim:
+
+```powershell
+foreach ($p in 'Neovim.Neovim','Git.Git','BurntSushi.ripgrep.MSVC','sharkdp.fd','OpenJS.NodeJS.LTS','EclipseAdoptium.Temurin.17.JDK') { winget install -e --id $p --silent --accept-package-agreements --accept-source-agreements }; git clone https://github.com/victordtruong/neovim.git $env:LOCALAPPDATA\nvim; $env:Path = [Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [Environment]::GetEnvironmentVariable('Path','User'); nvim
+```
+
+Or the equivalent scripted installer, which also backs up any existing
+Neovim config/data and does a headless plugin sync before first launch:
+
+```powershell
+iwr -useb https://raw.githubusercontent.com/victordtruong/neovim/main/windows-install.ps1 | iex
+```
+
+Prereqs: `winget` (bundled with modern Windows; if missing, install *App
+Installer* from the Microsoft Store) and PowerShell (not `cmd.exe`).
+
 ## Prerequisites
 
 **Required**
