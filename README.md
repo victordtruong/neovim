@@ -35,6 +35,12 @@ cd ~/nvim-config
 
 Re-running `./install.sh` later updates an existing install in place.
 
+Or run the installer straight from the web, no clone needed:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/victordtruong/neovim/main/install.sh | bash
+```
+
 ### Windows one-liner
 
 On Windows 10 1809+ / Windows 11, this PowerShell one-liner installs Neovim
