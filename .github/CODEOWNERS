@@ -1,0 +1,7 @@
+# Every path in this repo is owned by the account listed below.
+# Any PR that changes matching files automatically requests a review
+# from these owners, so you never miss one landing on your config.
+#
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-security/customizing-your-repository/about-code-owners
+
+*   @victordtruong
