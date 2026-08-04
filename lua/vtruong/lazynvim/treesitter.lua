@@ -1,5 +1,10 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    -- The `main` branch is a full incompatible rewrite that has removed
+    -- `nvim-treesitter.configs`, `ensure_installed`, `:TSInstall {lang}`, etc.
+    -- Stay on `master` (locked but supported for Nvim 0.11 back-compat) until
+    -- this config is ported to the new API.
+    branch = "master",
     build = ":TSUpdate",
     config = function()
         require("nvim-treesitter.configs").setup({
