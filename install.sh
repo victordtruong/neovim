@@ -109,9 +109,14 @@ else
   backup_if_present "$CACHE_DIR"
 
   # If we're being run from inside a checkout of this repo, copy it in place;
-  # otherwise clone from the remote.
-  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-  if [ -f "$script_dir/init.lua" ] && [ -d "$script_dir/lua/vtruong" ]; then
+  # otherwise clone from the remote. When invoked via `curl ... | bash` the
+  # script is piped on stdin, so BASH_SOURCE[0] is unset — treat that as
+  # "no local checkout" and fall through to the clone branch below.
+  script_dir=""
+  if [ -n "${BASH_SOURCE[0]:-}" ]; then
+    script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  fi
+  if [ -n "$script_dir" ] && [ -f "$script_dir/init.lua" ] && [ -d "$script_dir/lua/vtruong" ]; then
     info "Copying config from $script_dir -> $CONFIG_DIR"
     mkdir -p "$CONFIG_DIR"
     # Copy tracked files if it's a git repo, else copy everything sans .git.
