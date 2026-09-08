@@ -54,6 +54,10 @@ $packages = @(
     @{ Id = 'sharkdp.fd';                      Cmd = 'fd'   }
     @{ Id = 'OpenJS.NodeJS.LTS';               Cmd = 'node' }
     @{ Id = 'EclipseAdoptium.Temurin.17.JDK';  Cmd = 'java' }
+    # nvim-treesitter needs a C compiler to build parsers from source.
+    # zig doubles as one of its officially-supported compilers and is a
+    # much smaller install than the Visual Studio Build Tools.
+    @{ Id = 'zig.zig';                         Cmd = 'zig'  }
 )
 
 Write-Info "Checking / installing tools via winget"
