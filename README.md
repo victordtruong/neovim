@@ -41,11 +41,20 @@ Or run the installer straight from the web, no clone needed:
 curl -fsSL https://raw.githubusercontent.com/victordtruong/neovim/main/install.sh | bash
 ```
 
-### Windows one-liner
+### Windows
 
-On Windows 10 1809+ / Windows 11, this PowerShell one-liner installs Neovim
-and the whole recommended toolchain via `winget`, clones the config into
-`%LOCALAPPDATA%\nvim`, refreshes `PATH`, and launches Neovim:
+If Neovim and git are already installed, clone straight into the config
+directory and launch:
+
+```powershell
+git clone https://github.com/victordtruong/neovim.git $env:LOCALAPPDATA\nvim
+nvim
+```
+
+Starting from scratch? This PowerShell one-liner installs Neovim and the
+whole recommended toolchain via `winget`, clones the config into
+`%LOCALAPPDATA%\nvim`, refreshes `PATH`, and launches Neovim (Windows 10
+1809+ / Windows 11):
 
 ```powershell
 foreach ($p in 'Neovim.Neovim','Git.Git','BurntSushi.ripgrep.MSVC','sharkdp.fd','OpenJS.NodeJS.LTS','EclipseAdoptium.Temurin.17.JDK') { winget install -e --id $p --silent --accept-package-agreements --accept-source-agreements }; git clone https://github.com/victordtruong/neovim.git $env:LOCALAPPDATA\nvim; $env:Path = [Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [Environment]::GetEnvironmentVariable('Path','User'); nvim
