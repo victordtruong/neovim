@@ -1,7 +1,7 @@
 # neovim
 
-My personal Neovim configuration — lazy.nvim based, designed to drop onto any
-machine and be ready in a couple of minutes.
+My personal Neovim configuration — a single `init.lua`, lazy.nvim based,
+designed to drop onto any machine and be ready in a couple of minutes.
 
 ## Quick start
 
@@ -123,15 +123,16 @@ Leader is `<Space>`.
 
 ## Layout
 
+The whole configuration is one file. `init.lua` reads top to bottom:
+
 ```
-init.lua                 -> require("vtruong")
-lua/vtruong/
-  init.lua               -> loads remap + lazy
-  remap.lua              -> options & keymaps
-  lazy_init.lua          -> bootstraps and configures lazy.nvim
-  lazynvim/              -> plugin specs
-    colors.lua
-    lsp.lua
-    telescope.lua
-    treesitter.lua
+1. Leader keys        -- set before anything that uses <leader>
+2. Options            -- numbers, indent, search, undo, clipboard
+3. Core keymaps       -- file explorer, diagnostic navigation
+4. lazy.nvim bootstrap
+5. Plugins            -- colorschemes, Telescope, treesitter, LSP stack
 ```
+
+Everything else in the repo is supporting material: `lazy-lock.json` pins
+plugin versions, and `install.sh` / `windows-install.ps1` are the optional
+installers.

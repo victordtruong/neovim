@@ -114,7 +114,7 @@ if ($existingRemote -and $existingRemote -match 'victordtruong/neovim') {
     } else { $null }
     if ($scriptDir -and
         (Test-Path (Join-Path $scriptDir 'init.lua')) -and
-        (Test-Path (Join-Path $scriptDir 'lua\vtruong'))) {
+        (Test-Path (Join-Path $scriptDir 'lazy-lock.json'))) {
         Write-Info "Copying config from $scriptDir -> $configDir"
         New-Item -ItemType Directory -Force -Path $configDir | Out-Null
         # Copy tracked contents; skip .git so the deploy is not a working tree.

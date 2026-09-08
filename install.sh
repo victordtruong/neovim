@@ -116,7 +116,7 @@ else
   if [ -n "${BASH_SOURCE[0]:-}" ]; then
     script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   fi
-  if [ -n "$script_dir" ] && [ -f "$script_dir/init.lua" ] && [ -d "$script_dir/lua/vtruong" ]; then
+  if [ -n "$script_dir" ] && [ -f "$script_dir/init.lua" ] && [ -f "$script_dir/lazy-lock.json" ]; then
     info "Copying config from $script_dir -> $CONFIG_DIR"
     mkdir -p "$CONFIG_DIR"
     # Copy tracked files if it's a git repo, else copy everything sans .git.
