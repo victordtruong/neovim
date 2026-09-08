@@ -10,9 +10,11 @@ so on any new computer you just need this repo in Neovim's config directory.
 
 ### One-liner (recommended)
 
-Clone straight into the config directory and launch:
+Back up any existing config (skip if you don't have one), then clone straight
+into the config directory and launch:
 
 ```sh
+if [ -e ~/.config/nvim ]; then mv ~/.config/nvim ~/.config/nvim.backup-$(date +%Y%m%d-%H%M%S); fi
 git clone https://github.com/victordtruong/neovim.git ~/.config/nvim && nvim
 ```
 
@@ -43,10 +45,11 @@ curl -fsSL https://raw.githubusercontent.com/victordtruong/neovim/main/install.s
 
 ### Windows
 
-If Neovim and git are already installed, clone straight into the config
-directory and launch:
+If Neovim and git are already installed, back up any existing config, then
+clone straight into the config directory and launch:
 
 ```powershell
+if (Test-Path $env:LOCALAPPDATA\nvim) { Rename-Item $env:LOCALAPPDATA\nvim "nvim.backup-$(Get-Date -Format yyyyMMdd-HHmmss)" }
 git clone https://github.com/victordtruong/neovim.git $env:LOCALAPPDATA\nvim
 nvim
 ```
