@@ -60,7 +60,7 @@ whole recommended toolchain via `winget`, clones the config into
 1809+ / Windows 11):
 
 ```powershell
-foreach ($p in 'Neovim.Neovim','Git.Git','BurntSushi.ripgrep.MSVC','sharkdp.fd','OpenJS.NodeJS.LTS','EclipseAdoptium.Temurin.17.JDK') { winget install -e --id $p --silent --accept-package-agreements --accept-source-agreements }; git clone https://github.com/victordtruong/neovim.git $env:LOCALAPPDATA\nvim; $env:Path = [Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [Environment]::GetEnvironmentVariable('Path','User'); nvim
+foreach ($p in 'Neovim.Neovim','Git.Git','BurntSushi.ripgrep.MSVC','sharkdp.fd','OpenJS.NodeJS.LTS','EclipseAdoptium.Temurin.17.JDK','zig.zig') { winget install -e --id $p --silent --accept-package-agreements --accept-source-agreements }; git clone https://github.com/victordtruong/neovim.git $env:LOCALAPPDATA\nvim; $env:Path = [Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [Environment]::GetEnvironmentVariable('Path','User'); nvim
 ```
 
 Or the equivalent scripted installer, which also backs up any existing
@@ -84,7 +84,10 @@ Installer* from the Microsoft Store) and PowerShell (not `cmd.exe`).
 
 - **ripgrep** (`rg`) — Telescope live grep / grep-string
 - **fd** — faster Telescope file finding
-- A **C compiler** (`gcc`/`clang`) + **make** — building treesitter parsers
+- A **C compiler** (`gcc`/`clang`/`zig`) + **make** — building treesitter
+  parsers. Without one, `nvim-treesitter` fails with `No C compiler found!`
+  and syntax highlighting/indent stay off for affected languages — nothing
+  else in the config is affected.
 - **Node.js** + **npm** — many Mason-managed language servers
 - **JDK 17+** (`java`) — `kotlin_language_server` and other JVM servers
 - **unzip**, **curl** — Mason downloads
@@ -100,6 +103,19 @@ sudo apt install neovim ripgrep fd-find build-essential nodejs npm openjdk-17-jd
 
 # Arch
 sudo pacman -S neovim ripgrep fd base-devel nodejs npm jdk17-openjdk
+```
+
+```powershell
+# Windows (winget) — zig doubles as one of nvim-treesitter's officially
+# supported C compilers and is a much smaller install than the Visual
+# Studio Build Tools.
+winget install -e --id Neovim.Neovim
+winget install -e --id Git.Git
+winget install -e --id BurntSushi.ripgrep.MSVC
+winget install -e --id sharkdp.fd
+winget install -e --id OpenJS.NodeJS.LTS
+winget install -e --id EclipseAdoptium.Temurin.17.JDK
+winget install -e --id zig.zig
 ```
 
 ## Config directory by OS
